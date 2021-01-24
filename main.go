@@ -3,13 +3,12 @@ package main
 import (
 	"database/sql"
 	"log"
-	"math/rand"
 	"time"
 
 	_ "modernc.org/sqlite"
 )
 
-const concurrency = 10
+const concurrency = 5
 
 func main() {
 	db, err := sql.Open("sqlite", "./cities.db")
@@ -49,7 +48,6 @@ func main() {
 		{"phoenix"},
 		{"hanoi"},
 		{"abu dhabi"},
-		{"does not exist"},
 		{"abuja"},
 		{"accra"},
 		{"adamstown"},
@@ -113,12 +111,7 @@ func main() {
 	for {
 		for g := 0; g < concurrency; g += 1 {
 			go func() {
-				lower := rand.Intn(len(queries) - 1)
-				upper := rand.Intn(len(queries)-lower) + lower
-
-				slice := queries[lower:upper]
-
-				for _, query := range slice {
+				for _, query := range queries {
 					var long, lat float32
 					row := stmt.QueryRow(query.city)
 
@@ -129,7 +122,8 @@ func main() {
 			}()
 		}
 
-		log.Println("done batch")
+		log.Println("batch done")
+
 		// Give a small break between iterations to avoid consuming all system memory too quickly
 		time.Sleep(3 * time.Second)
 	}
