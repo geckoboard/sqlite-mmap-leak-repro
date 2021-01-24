@@ -8,7 +8,7 @@ attempts to look up the latitude/longitude of a selection.
 
 The leak seems to occur when the program runs queries that return no
 rows. There are some entries in the test data labelled `does not exist`
-which will cause `QueryRow()` to return `sql.ErrNoRows` to be returned.
+which will cause `QueryRow()` to return `sql.ErrNoRows`.
 
 When these entries are commented out, `make pmap` will remain at a
 consistent number of entries, roughly ~18 on my machine. If they're
@@ -57,6 +57,3 @@ up/down it:
 
 It's possible to track the number of allocated mmaps from outside the
 process using `make pmap`.
-
-## forcing the leak
-
