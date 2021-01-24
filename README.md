@@ -44,6 +44,17 @@ execution at the `mmap` call when the condition is met:
 (dlv) continue
 ```
 
+Once execution halts at the breakpoint you can print the stack, and move
+up/down it:
+
+```
+(dlv) stack
+(dlv) up 1
+(dlv) up 10
+(dlv) down 10
+```
+
+
 It's possible to track the number of allocated mmaps from outside the
 process using `make pmap`.
 
