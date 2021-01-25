@@ -1,7 +1,7 @@
 .PHONY: debug pmap
 
 cities.db:
-	wget https://s3.amazonaws.com/gecko.static/geo_cities-201503.db -O cities.db
+	wget https://static.geckoboard.com/geo_cities-201503.db -O cities.db
 
 debug: $(GOPATH)/bin/dlv ./cities.db
 	dlv debug ./ --output __sqlite_debug
